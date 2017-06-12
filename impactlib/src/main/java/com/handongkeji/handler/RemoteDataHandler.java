@@ -721,10 +721,13 @@ public class RemoteDataHandler {
                         if (json != null) {
                             JSONObject object = new JSONObject(json);
                             int status = object.getInt("status");
+
+                            msg.what = status;
+
                             String message = object.getString("message");
                             if (1 == status) {
-                                msg.obj = json;
                             }
+                            msg.obj = json;
 
                             if (609 == status) {//账户冻结
 
@@ -744,6 +747,7 @@ public class RemoteDataHandler {
 
                                 Intent otherlogin = new Intent(STATE_REMOTE_LOGIN);
                                 otherlogin.putExtra("json", dat.toString());
+                                Log.i("MainActivity", "RemoteHandler:602 ");
                                 context.sendBroadcast(otherlogin);
 
                             }
@@ -756,15 +760,17 @@ public class RemoteDataHandler {
                         if (json != null) {
                             json = json.replaceAll("\\x0a|\\x0d", "");
 
-
                             JSONObject object = new JSONObject(json);
                             int status = object.getInt("status");
                             String message = object.getString("message");
 
+                            msg.what = status;
+                            msg.obj = json;
+
+
                             if (1 == status) {
-                                ConfigCacheUtil.setUrlCache(ukey, json);
-                                msg.obj = json;
                                 // 在此处添加缓存
+                                ConfigCacheUtil.setUrlCache(ukey, json);
                             }
 
                             if (602 == status) {
@@ -777,20 +783,27 @@ public class RemoteDataHandler {
                                     apptype = "苹果";
                                 }
 
+                                JSONObject obj = new JSONObject();
+                                obj.put("status", 602);
+                                obj.put("message", message);
+                                obj.put("ip", currentip);
+                                obj.put("apptype", apptype);
 
-                                Intent otherlogin = new Intent("otherlogin");
-                                otherlogin.putExtra("json", json);
+
+                                Intent otherlogin = new Intent(STATE_REMOTE_LOGIN);
+                                otherlogin.putExtra("json", obj.toString());
                                 context.sendBroadcast(otherlogin);
                             }
 
                             if (609 == object.getInt("status")) {
-                                Intent intent = new Intent("dongjie");
+                                Intent intent = new Intent(STATE_ACCOUNT_FREEZE);
                                 intent.putExtra("dongjie", 1);
                                 context.sendBroadcast(intent);
                             }
 
                         }
                     }
+
 
                 } catch (IOException e) {
                     msg.what = HttpStatus.SC_REQUEST_TIMEOUT;
@@ -1063,6 +1076,7 @@ public class RemoteDataHandler {
                         if (609 == status) {
                             Intent intent = new Intent("dongjie");
                             intent.putExtra("dongjie", 1);
+//                            MyApp.getInstance().sendBroadcast(intent);
                         }
 
                     }

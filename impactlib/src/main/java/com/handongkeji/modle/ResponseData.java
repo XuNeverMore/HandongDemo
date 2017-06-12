@@ -13,6 +13,14 @@ package com.handongkeji.modle;
  * @author hjgang
  */
 public class ResponseData {
+
+	public static final int CODE_SUCCESS =1;
+	public static final int CODE_REMOTE_LOGIN =602;
+	public static final int CODE_FREEZE =609;
+	public static final int CODE_MISSING_PARAMETER =402;
+
+
+
 	public static final class Attr{
 		public static final String CODE = "code";
 		public static final String HASMORE = "haveMore";
@@ -30,7 +38,7 @@ public class ResponseData {
 	private String result;
 	/** 总记录数 */
 	private long count;
-	
+
 	public int getCode() {
 		return code;
 	}

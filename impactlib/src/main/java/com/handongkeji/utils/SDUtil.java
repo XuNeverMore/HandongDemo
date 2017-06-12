@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.StatFs;
 
-import com.xiaoweiqiye.common.Constants;
+import com.handongkeji.common.Constants;
 
 import java.io.File;
 import java.io.FileNotFoundException;

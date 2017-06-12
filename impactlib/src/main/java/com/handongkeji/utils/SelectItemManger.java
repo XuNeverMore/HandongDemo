@@ -36,11 +36,6 @@ public class SelectItemManger {
         Object getItem(int positon);
     }
 
-    /**
-     * 单选模式
-     */
-
-    public static int MODE_SINGLE_SELECTION = 0;
 
     //最近一次点击的条目位置
     private int lastposition = -1;
